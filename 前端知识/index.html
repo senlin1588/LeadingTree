@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>前端知识梳理-JS</title>
+	</head>
+	<body>
+		<h3>前端知识点梳理JS</h3>
+		<p></p>
+		<script>
+		//内置类型
+		// 1.关于null的问题  原因解释：
+		// 网址：https://segmentfault.com/q/1010000011846328
+		// javascript 中的 null：既是对象，又不是对象，史称「薛定谔的对象」。
+		// typeof null === 'object';
+		// null instanceof Object === false
+		// 而
+		// null instanceof null
+		// 会抛出异常：
+		// Uncaught TypeError: Right-hand side of 'instanceof' is not an object
+		// 这是一个历史遗留下来的 feature(or bug?)，The history of “typeof null”
+		// 在 javascript 的最初版本中，使用的 32 位系统，为了性能考虑使用低位存储了变量的类型信息：
+		//     000：对象
+		//     1：整数
+		//     010：浮点数
+		//     100：字符串
+		//     110：布尔
+		// 有 2 个值比较特殊：
+		//     undefined：用 - （−2^30）表示。
+		//     null：对应机器码的 NULL 指针，一般是全零。
+		// 在第一版的 javascript 实现中，判断类型的代码是这么写的：
+		// if (JSVAL_IS_VOID(v)) {  // (1)
+		//     type = JSTYPE_VOID;
+		// } else if (JSVAL_IS_OBJECT(v)) {  // (2)
+		//     obj = JSVAL_TO_OBJECT(v);
+		//     if (obj &&
+		//         (ops = obj->map->ops,
+		//             ops == &js_ObjectOps
+		//             ? (clasp = OBJ_GET_CLASS(cx, obj),
+		//             clasp->call || clasp == &js_FunctionClass) // (3,4)
+		//             : ops->call != 0)) {  // (3)
+		//         type = JSTYPE_FUNCTION;
+		//     } else {
+		//         type = JSTYPE_OBJECT;
+		//     }
+		// } else if (JSVAL_IS_NUMBER(v)) {
+		//     type = JSTYPE_NUMBER;
+		// } else if (JSVAL_IS_STRING(v)) {
+		//     type = JSTYPE_STRING;
+		// } else if (JSVAL_IS_BOOLEAN(v)) {
+		//     type = JSTYPE_BOOLEAN;
+		// }
+		// （1）：判断是否为 undefined
+		// （2）：如果不是 undefined，判断是否为对象
+		// （3）：如果不是对象，判断是否为数字
+		// （4）：。。。
+		// 这样一来，null 就出了一个 bug。根据 type tags 信息，低位是 000，因此 null 被判断成了一个对象。这就是为什么 typeof null 的返回值是 object。
+		// 关于 null 的类型在 MDN 文档中也有简单的描述：typeof - javascript | MDN
+		// 在 ES6 中曾有关于修复此 bug 的提议，提议中称应该让 typeof null === 'null' http://wiki.ecmascript.org/do...:typeof_null 但是该提议被无情的否决了，自此 typeof null 终于不再是一个 bug，而是一个 feature，并且永远不会被修复。
+		// 这是 JavaScript 最初实现的一个 bug，目前的 JavaScript 引擎已经不这么去实现了，但是这个 bug 却一直流传了下来。
+			let a = typeof(null);
+			console.log(a);
+			let b = null instanceof(Object);
+			console.log(b);
+			
+		// 2.关于最大值最小值问题    （2的53次方-1）
+		console.log(Number.MAX_VALUE);
+		console.log(Number.MIN_VALUE);
+		
+		// 3.深入理解js的值，类型转换
+			// 8种基本数据类型：null,undefined,string,number,boolean,Symbol,Object
+			// 	引用数据类型：Object:Function,Data,Array,RegExp 
+			// 	引用数据类型：String,Boolean,Number
+			
+		//作用域
+			//说说你对js词法作用域和动态作用域的理解
+			// 1.混乱产生机制：嵌套位置，调用顺序，this机制干扰
+			// 2.
+		</script>
+	</body>
+</html>
