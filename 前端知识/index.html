@@ -58,14 +58,14 @@
 		// 关于 null 的类型在 MDN 文档中也有简单的描述：typeof - javascript | MDN
 		// 在 ES6 中曾有关于修复此 bug 的提议，提议中称应该让 typeof null === 'null' http://wiki.ecmascript.org/do...:typeof_null 但是该提议被无情的否决了，自此 typeof null 终于不再是一个 bug，而是一个 feature，并且永远不会被修复。
 		// 这是 JavaScript 最初实现的一个 bug，目前的 JavaScript 引擎已经不这么去实现了，但是这个 bug 却一直流传了下来。
-			let a = typeof(null);
-			console.log(a);
-			let b = null instanceof(Object);
-			console.log(b);
+			// let a = typeof(null);
+			// console.log(a);
+			// let b = null instanceof(Object);
+			// console.log(b);
 			
 		// 2.关于最大值最小值问题    （2的53次方-1）
-		console.log(Number.MAX_VALUE);
-		console.log(Number.MIN_VALUE);
+		// console.log(Number.MAX_VALUE);
+		// console.log(Number.MIN_VALUE);
 		
 		// 3.深入理解js的值，类型转换
 			// 8种基本数据类型：null,undefined,string,number,boolean,Symbol,Object
@@ -73,9 +73,57 @@
 			// 	引用数据类型：String,Boolean,Number
 			
 		//作用域
-			//说说你对js词法作用域和动态作用域的理解
+			//1.说说你对js词法作用域和动态作用域的理解
 			// 1.混乱产生机制：嵌套位置，调用顺序，this机制干扰
-			// 2.
+			// 2.词法作用域和动态作用域
+			// 3.词法作用域：遮蔽效用		通过window.a可以访问全局作用域 但是内部作用域被遮蔽无法进行访问
+			// 4.动态作用域：
+				// 基于作用域栈而不是代码中的作用域嵌套
+				// var a = 2;
+				// function foo() {
+				//     console.log( a );
+				// }
+				// function bar() {
+				//     var a = 3;
+				//     foo();
+				// 	function baz(){
+				// 		console.log(a);
+				// 	}
+				// 	baz();
+				// }
+				// bar();
+				
+				//0.当前【javaScript】采用的是【词法作用域】，即定义的时候就确定了函数的作用域，访问值也是定义作用域及全局作用域，所以该值为2
+		// 		1.如果处于词法作用域，也就是现在的javascript环境。变量a首先在foo()函数中查找，没有找到。于是顺着作用域链到全局作用域中查找，找到并赋值为2。所以控制台输出2
+		// 		2.如果处于动态作用域，同样地，变量a首先在foo()中查找，没有找到。这里会顺着调用栈在调用foo()函数的地方，也就是bar()函数中查找，找到并赋值为3。所以控制台输出3
+			2.作用域和作用域链
+				作用域：隔离变量，不同作用域中可以存在同名变量 ES6新增了块级作用域
+				作用域分类：全局作用域，函数作用域，块级作用域
+						1.全局作用域和函数作用域
+							1.不声明直接使用的对象，则默认声明为全局变量
+							2.windows对象的属性为全局作用域
+							3.内层作用域可以访问外层作用域变量，反之则不行
+							4.{}中间的语句中声明的变量是全局变量（例如if，Switch，for，while）
+						2.块级作用域
+							通过let或者const声明
+							1.在一个函数内部
+							2.在一个代码块内部
+								不能重复声明
+								不会提升到代码块顶部
+								循环中使用块级作用域，for循环中用let声明循环变量
+				作用域链：
+						1.自由变量：当前作用域没有定义的变量
+						2.作用域链：顺作用域链向父级作用域找
+						3.自由变量的取值：向创建的作用域中去查找
+				
+			3.作用域与执行上下文
+						区别：
+							执行上下文是在运行时候确定的，作用域是在定义时候确定的
+						解释阶段：词法分析，语法分析，作用域规则确定
+						执行阶段：创建执行上下文，执行代码，垃圾回收
+						1.作用域是在创建过程中确定，不可以改变
+						2.this是在执行过程中确定的，随时可以改变
+						作用域，上下文，同一个作用域可能有0-n个 上下文执行环境，不同上下文环境调用值不同，产生的结果不同
 		</script>
 	</body>
 </html>
