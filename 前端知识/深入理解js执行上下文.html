@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		1.执行上下文
+			定义：当前js代码解释和执行时所依赖的抽象环境
+		 上下文分类：
+			全局执行上下文：1.创建全局对象，2.this指针指向全局对象 3.一个程序中只能有一个全局对象上下文
+			函数执行上下文：1.函数执行时候创建执行上下文 2.一个程序可以有多个函数执行上下文
+			Eval函数执行上下文
+		2.执行上下文的生命周期
+			1.创建阶段：1.创建变量对象 2.创建作用域链 3.确定this指向
+			2.执行阶段：执行变量赋值，代码执行
+			3.回收阶段：根据上下文出栈等虚拟机回收上下文
+		3.变量提升和this指向细节
+			1.变量声明提升
+				1.其他语言是先声明再使用，js不是  
+				  在这段代码中，a会被先声明，即var a ;在执行console.log，然后执行赋值操作
+					console.log(a); // undefined 
+					var a = 10;
+			2.函数声明提升  
+				函数声明function foo(){}有声明提升，
+				函数表达式无声明提升 var foo = function(){}
+				对于同名的函数和变量来讲，function的优先级比var高
+				下面例子：
+				顺序：
+				1.函数形参先执行赋值操作  
+				2.函数声明提升到函数作用域头部声明
+				3.var a 声明（变量声明被忽略），arg = "hello"被执行，完成赋值
+				function test(arg) {
+				    // 1. 形参 arg 是 "hi"
+				    // 2. 因为【函数声明比变量声明】优先级高，所以此时 arg 是 function
+				    console.log(arg);
+				    var arg = "hello"; // 3.【var arg 变量声明被忽略】， 【arg = 'hello'被执行】
+				    function arg() {
+				        console.log("hello world");
+				    }
+				    console.log(arg);
+				}
+				test("hi");
+				/* 输出：
+				function arg(){
+				    console.log('hello world') 
+				    }
+				hello 
+				*/
+				
+			3.确定this指向
+				this在执行的时候才能确认，在定义的时候是不能确认的，this是执行环境上下文的一部分
+				判断this，先看其执行环境，即this调用
+				    对于直接调用 foo 来说，不管 foo 函数被放在了什么地方，this 一定是 window
+				    对于 obj.foo() 来说，我们只需要记住，谁调用了函数，谁就是 this，所以在这个场景下 foo 函数中的 this 就是 obj 对象
+				    在构造函数模式中，类中(函数体中)出现的 this.xxx=xxx 中的 this 是当前类的一个实例
+				    call、apply 和 bind：this 是第一个参数
+				    箭头函数 this 指向:箭头函数没有自己的 this，看其外层的是否有函数，如果有，外层函数的 this 就是内部箭头函数的 this，如果没有，则 this 是 window。
+		4.执行上下文栈
+				执行环境下，先进后出原则
+		
+		
+			
+	</body>
+</html>
